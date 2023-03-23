@@ -7,7 +7,9 @@
  *       Group:
  */
 
-#include "Collectible.h"
+#include "Powerup.h"
+#include "BonusItem.h"
+#include "CollectibleDots.h"
 #include "UI.h"
 #include <SDL2/SDL.h>
 #include <vector>
@@ -52,10 +54,16 @@ int main(int /*argc*/, char ** /*argv*/)
 
     // Call game init code here
     Collectible testCollectible;
-    testCollectible.x = 2;
+    testCollectible.x = 3;
     testCollectible.y = 1;
     testCollectible.type = STRAWBERRY;
     testCollectible.dir = RIGHT;
+
+    Powerup testPowerup;
+    testPowerup.x = 10;
+    testPowerup.y = 1;
+    testPowerup.type = ENERGIZER;
+    testPowerup.dir = RIGHT;
 
 
     bool quit = false;
@@ -93,10 +101,10 @@ int main(int /*argc*/, char ** /*argv*/)
         ui.setScore(12345); // <-- Pass correct value to the setter
 
         // Set the amount of lives
-        ui.setLives(3); // <-- Pass correct value to the setter
+        ui.setLives(2); // <-- Pass correct value to the setter
 
         // Render the scene
-        std::vector<GameObjectStruct> objects = {pacman, testCollectible};
+        std::vector<GameObjectStruct> objects = {pacman, testCollectible, testPowerup};
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
         ui.update(objects);
