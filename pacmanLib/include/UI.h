@@ -18,6 +18,7 @@
 
 #include <map>
 #include <vector>
+#include <string>
 
 /**
  * Description of UI class
