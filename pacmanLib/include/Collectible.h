@@ -17,12 +17,17 @@
 class Collectible : public GameObjectStruct
 {
     //Taking in an x, y, sprite and direction because it is a GameObjectStruct class
-
+private:
 
 public:
     void DisappearOnCollision()
     {
 
+    }
+
+    virtual void Appear() //Virtual
+    {
+        
     }
 
 };

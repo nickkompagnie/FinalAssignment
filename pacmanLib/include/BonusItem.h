@@ -17,13 +17,14 @@ class BonusItem : public PointsCollectible
 {
     //Taking in an x, y, sprite and direction because it is a GameObjectStruct class
 private:
-    int num_points;
+    const int points = 3;
 
 public:
-    void Appear()
+    void Appear() override
     {
 
-    }
+    };
+
 
 };
 

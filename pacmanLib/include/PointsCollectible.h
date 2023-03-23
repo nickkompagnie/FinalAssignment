@@ -16,7 +16,7 @@
 class PointsCollectible : public Collectible
 {
     //Taking in an x, y, sprite and direction because it is a GameObjectStruct class
-
+private:
 
 public:
     void IncreaseScore()

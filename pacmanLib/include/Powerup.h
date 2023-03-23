@@ -18,10 +18,11 @@ class Powerup : public Collectible
 
 
 public:
-    void Appear()
+    void Appear() override
     {
 
-    }
+    };
+    
     void ActivatePowermode()
     {
 

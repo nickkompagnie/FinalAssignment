@@ -9,7 +9,7 @@
 
 #include "Powerup.h"
 #include "BonusItem.h"
-#include "CollectibleDots.h"
+#include "CollectibleDot.h"
 #include "UI.h"
 #include <SDL2/SDL.h>
 #include <vector>
@@ -53,17 +53,23 @@ int main(int /*argc*/, char ** /*argv*/)
     pacman.dir = UP;
 
     // Call game init code here
-    Collectible testCollectible;
-    testCollectible.x = 3;
-    testCollectible.y = 1;
-    testCollectible.type = STRAWBERRY;
-    testCollectible.dir = RIGHT;
-
     Powerup testPowerup;
-    testPowerup.x = 10;
+    testPowerup.x = 2;
     testPowerup.y = 1;
     testPowerup.type = ENERGIZER;
     testPowerup.dir = RIGHT;
+
+    BonusItem testBonusItem;
+    testBonusItem.x = 3;
+    testBonusItem.y = 1;
+    testBonusItem.type = ORANGE;
+    testBonusItem.dir = RIGHT;
+
+    CollectibleDot testCollectibleDot;
+    testCollectibleDot.x = 4;
+    testCollectibleDot.y = 1;
+    testCollectibleDot.type = DOT;
+    testCollectibleDot.dir = RIGHT;
 
 
     bool quit = false;
@@ -104,7 +110,7 @@ int main(int /*argc*/, char ** /*argv*/)
         ui.setLives(2); // <-- Pass correct value to the setter
 
         // Render the scene
-        std::vector<GameObjectStruct> objects = {pacman, testCollectible, testPowerup};
+        std::vector<GameObjectStruct> objects = {pacman, testPowerup, testBonusItem, testCollectibleDot};
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
         ui.update(objects);
