@@ -10,6 +10,8 @@
 #include "Powerup.h"
 #include "BonusItem.h"
 #include "CollectibleDot.h"
+#include "Lives.h"
+#include "Score.h"
 #include "UI.h"
 #include <SDL2/SDL.h>
 #include <vector>
