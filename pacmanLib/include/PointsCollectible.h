@@ -1,30 +1,27 @@
 //==============================================================
-// Filename : Powerup.h
+// Filename : PointsCollectible.h
 // Authors : Quinten Boeve and Nick Kompagnie
 // Group : 17
 // License : N.A. or open source license like LGPL
-// Description : A powerup gives the player power to eat ghosts and slows the ghosts down
+// Description : PointsCollectible is the base class for bonuses and collectible dots
 //==============================================================
 
-#ifndef POWERUP
-#define POWERUP
+#ifndef POINTS_COLLECTIBLE
+#define POINTS_COLLECTIBLE
 
 #include "Collectible.h"
 
 
-class Powerup : public Collectible
+
+class PointsCollectible : public Collectible
 {
     //Taking in an x, y, sprite and direction because it is a GameObjectStruct class
 
 
 public:
-    void Appear()
+    void IncreaseScore()
     {
-
-    }
-    void ActivatePowermode()
-    {
-
+        
     }
 
 };

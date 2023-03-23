@@ -16,7 +16,7 @@
 ///
 class Collectible : public GameObjectStruct
 {
-    //Taking in anx, y, sprite and direction because it is a GameObjectStruct class
+    //Taking in an x, y, sprite and direction because it is a GameObjectStruct class
 
 
 public:
