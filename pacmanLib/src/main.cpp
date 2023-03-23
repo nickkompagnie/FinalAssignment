@@ -7,10 +7,11 @@
  *       Group:
  */
 
-#include "GameObjectStruct.h"
+#include "Collectible.h"
 #include "UI.h"
 #include <SDL2/SDL.h>
 #include <vector>
+#include <iostream>
 
 /// Callback function to update the game state.
 ///
@@ -23,6 +24,8 @@
 Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 {
     // Do game loop update here
+    //std::cout << "testy each update" << std::endl;
+    
     return interval;
 }
 
@@ -48,6 +51,11 @@ int main(int /*argc*/, char ** /*argv*/)
     pacman.dir = UP;
 
     // Call game init code here
+    Collectible testCollectible;
+    testCollectible.x = 2;
+    testCollectible.y = 1;
+    testCollectible.type = STRAWBERRY;
+    testCollectible.dir = RIGHT;
 
 
     bool quit = false;
@@ -88,7 +96,7 @@ int main(int /*argc*/, char ** /*argv*/)
         ui.setLives(3); // <-- Pass correct value to the setter
 
         // Render the scene
-        std::vector<GameObjectStruct> objects = {pacman};
+        std::vector<GameObjectStruct> objects = {pacman, testCollectible};
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
         ui.update(objects);
