@@ -17,6 +17,10 @@
 #include <SDL2/SDL.h>
 #include <vector>
 #include <iostream>
+#include <map>
+#include <array>
+#include <iterator>
+#include <typeinfo>
 
 /// Callback function to update the game state.
 ///
@@ -26,6 +30,10 @@
 /// should use mutexes to access shared data.
 /// Read the documentation of SDL_AddTimer for more information and for tips
 /// regarding multithreading issues.
+
+
+std::map<std::array<int,2>, GameObjectStruct> items;
+
 Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 {
     // Do game loop update here
@@ -71,6 +79,35 @@ int main(int /*argc*/, char ** /*argv*/)
     testBonusItem.y = 1;
     testBonusItem.type = ORANGE;
     testBonusItem.dir = RIGHT;
+
+    std::vector<GameObjectStruct> dotsvector ;
+    //x= 27, y = 26
+    for(int i=0;i<28;i++) {
+        for(int j=0;j<27;j++) {
+            if(map[j][i]==0) {
+                
+                // CollectibleDot (i.num2string() +j.num2sting());
+                // (i.num2string() +j.num2sting()).x = i;
+                // (i.num2string() +j.num2sting()).y = j;   
+                // (i.num2string() +j.num2sting()).type = DOT;
+
+                CollectibleDot dot;
+                dot.x = i;
+                dot.y = j;
+                dot.type = DOT;
+
+                std::array<int,2> coordinates = {i,j};
+
+
+                items.insert(std::pair<std::array<int,2>,GameObjectStruct>(coordinates,dot));
+
+                dotsvector.push_back(dot);
+
+
+
+            }
+        }
+    }
 
     CollectibleDot testCollectibleDot;
     testCollectibleDot.x = 4;
@@ -121,14 +158,24 @@ int main(int /*argc*/, char ** /*argv*/)
         //Move the pacman player character
         std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
-        //TODO:
-        //What is @ the position in front
-        //logic to make pacman move if this is an option.
-        //
+        
+
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] == 0) {
+
+
+
+            
+
             pacman.Move();
+            std::array<int,2> coordinates = {pacman.x, pacman.y};
+
+            if(typeid(items[coordinates]) == typeid(GameObjectStruct)){
+            items.erase(coordinates);
         }
+        }
+
+    
 
         
        
@@ -139,8 +186,19 @@ int main(int /*argc*/, char ** /*argv*/)
         // Set the amount of lives
         ui.setLives(2); // <-- Pass correct value to the setter
 
+        dotsvector.clear();
+
+        std::map<std::array<int,2>, GameObjectStruct> :: iterator iter;
+
+        for(iter =items.begin(); iter != items.end(); ++iter){
+            dotsvector.push_back(iter->second);
+        }
+
         // Render the scene
         std::vector<GameObjectStruct> objects = {pacman, testPowerup, testBonusItem, testCollectibleDot};
+
+        objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
+        
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
         ui.update(objects);
