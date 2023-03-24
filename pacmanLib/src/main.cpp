@@ -114,44 +114,8 @@ int main(int /*argc*/, char ** /*argv*/)
         }
 
         //Move the pacman player character
-        //*GameObjectStruct pacmanPtr = *pacman;
-        std::cout << "pacman y: " << pacman.y << "and direction" << pacman.dir << std::endl;
-        if(pacman.dir == RIGHT) {
-            if(pacman.x <= 25) {
-                moveCounter++;
-                if(moveCounter > pacman.slowness) {
-                    pacman.x++;
-                    moveCounter = 0;
-                }
-            }
-        }
-        else if(pacman.dir == LEFT){
-            if(pacman.x >= 2) {
-                moveCounter++;
-                if(moveCounter > pacman.slowness) {
-                    pacman.x--;
-                    moveCounter = 0;
-                }
-            }
-        }
-        else if(pacman.dir == DOWN){
-            if(pacman.y <= 24) {
-                moveCounter++;
-                if(moveCounter > pacman.slowness) {
-                    pacman.y++;
-                    moveCounter = 0;
-                }
-            }
-        }
-        else if(pacman.dir == UP){
-            if(pacman.y >= 2) {
-                moveCounter++;
-                if(moveCounter > pacman.slowness) {
-                    pacman.y--;
-                    moveCounter = 0;
-                }
-            }
-        }
+        std::cout << "pacman y: " << pacman.y << " and x" << pacman.x << " and direction" << pacman.dir << std::endl;
+        pacman.Move();
 
         // Set the score
         ui.setScore(17); // <-- Pass correct value to the setter

@@ -24,7 +24,7 @@ public:
 
     }
 
-    void die() {
+    void Die() {
 
 
     }
