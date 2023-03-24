@@ -120,7 +120,18 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //Move the pacman player character
         std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
-        pacman.Move();
+
+        //TODO:
+        //What is @ the position in front
+        //logic to make pacman move if this is an option.
+        //
+
+        if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] == 0) {
+            pacman.Move();
+        }
+
+        
+       
 
         // Set the score
         ui.setScore(17); // <-- Pass correct value to the setter
