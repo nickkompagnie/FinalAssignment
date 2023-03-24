@@ -26,25 +26,35 @@ public:
     void Move() 
     {
         if(dir == RIGHT) {
-            if(x <= 25) {
-                moveCounter++;
-                if(moveCounter > slowness) {
-                    x++;
-                    moveCounter = 0;
+            if(x <= 27) {
+                    moveCounter++;
+                    if(moveCounter > slowness) {
+                        x++;
+                        moveCounter = 0;
+                }
+            }
+            else { //Possible teleport to other side
+                if (y == 13) {
+                    x = 1;
                 }
             }
         }
         else if(dir == LEFT){
-            if(x >= 2) {
+            if(x >= 0) {
                 moveCounter++;
                 if(moveCounter > slowness) {
                     x--;
                     moveCounter = 0;
                 }
             }
+            else { //Possible teleport to other side
+                if (y == 13) {
+                    x = 26;
+                }
+            }
         }
         else if(dir == DOWN){
-            if(y <= 24) {
+            if(y <= 26) {
                 moveCounter++;
                 if(moveCounter > slowness) {
                     y++;
@@ -53,7 +63,7 @@ public:
             }
         }
         else if(dir == UP){
-            if(y >= 2) {
+            if(y >= 0) {
                 moveCounter++;
                 if(moveCounter > slowness) {
                     y--;
