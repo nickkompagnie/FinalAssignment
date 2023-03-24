@@ -1,11 +1,10 @@
-/// \file
-/// main.cpp
-
-/*
- *  Created on: Jan 29, 2015
- *      Author:
- *       Group:
- */
+//==============================================================
+// Filename : main.cpp
+// Authors : Quinten Boeve and Nick Kompagnie
+// Group : 17
+// License : N.A. or open source license like LGPL
+// Description : The main file of the PacMan game
+//==============================================================
 
 #include "Powerup.h"
 #include "BonusItem.h"
@@ -13,6 +12,8 @@
 #include "Lives.h"
 #include "Score.h"
 #include "UI.h"
+#include "PacmanChar.h"
+#include "Ghost.h"
 #include <SDL2/SDL.h>
 #include <vector>
 #include <iostream>
@@ -29,13 +30,16 @@ Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 {
     // Do game loop update here
     //std::cout << "testy each update" << std::endl;
-    
+
     return interval;
 }
 
 /// Program entry point.
 int main(int /*argc*/, char ** /*argv*/)
 {
+    //Params for movement
+    int moveCounter;
+
     std::vector<std::vector<int>> map = {{
         #include "board.def"
     }};
@@ -48,11 +52,11 @@ int main(int /*argc*/, char ** /*argv*/)
         SDL_AddTimer(100, gameUpdate, static_cast<void *>(nullptr));
 
     // Example object, this can be removed later
-    GameObjectStruct pacman;
+    PacmanChar pacman;
     pacman.x = 1;
     pacman.y = 1;
     pacman.type = PACMAN;
-    pacman.dir = UP;
+    pacman.dir = RIGHT;
 
     // Call game init code here
     Powerup testPowerup;
@@ -91,12 +95,16 @@ int main(int /*argc*/, char ** /*argv*/)
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                 case SDLK_LEFT: // YOUR CODE HERE
+                    pacman.dir = LEFT;
                     break;
                 case SDLK_RIGHT: // YOUR CODE HERE
+                    pacman.dir = RIGHT;
                     break;
                 case SDLK_UP: // YOUR CODE HERE
+                    pacman.dir = UP;
                     break;
                 case SDLK_DOWN: // YOUR CODE HERE
+                pacman.dir = DOWN;
                     break;
                 case SDLK_ESCAPE:
                     quit = true;
@@ -105,8 +113,48 @@ int main(int /*argc*/, char ** /*argv*/)
             }
         }
 
+        //Move the pacman player character
+        //*GameObjectStruct pacmanPtr = *pacman;
+        std::cout << "pacman y: " << pacman.y << "and direction" << pacman.dir << std::endl;
+        if(pacman.dir == RIGHT) {
+            if(pacman.x <= 25) {
+                moveCounter++;
+                if(moveCounter > pacman.slowness) {
+                    pacman.x++;
+                    moveCounter = 0;
+                }
+            }
+        }
+        else if(pacman.dir == LEFT){
+            if(pacman.x >= 2) {
+                moveCounter++;
+                if(moveCounter > pacman.slowness) {
+                    pacman.x--;
+                    moveCounter = 0;
+                }
+            }
+        }
+        else if(pacman.dir == DOWN){
+            if(pacman.y <= 24) {
+                moveCounter++;
+                if(moveCounter > pacman.slowness) {
+                    pacman.y++;
+                    moveCounter = 0;
+                }
+            }
+        }
+        else if(pacman.dir == UP){
+            if(pacman.y >= 2) {
+                moveCounter++;
+                if(moveCounter > pacman.slowness) {
+                    pacman.y--;
+                    moveCounter = 0;
+                }
+            }
+        }
+
         // Set the score
-        ui.setScore(12345); // <-- Pass correct value to the setter
+        ui.setScore(17); // <-- Pass correct value to the setter
 
         // Set the amount of lives
         ui.setLives(2); // <-- Pass correct value to the setter
@@ -126,3 +174,11 @@ int main(int /*argc*/, char ** /*argv*/)
 
     return 0;
 }
+
+// public void Move(GameObjectStruct* objectToMove)
+// {
+//     if(objectToMove->dir == RIGHT)
+//         objectToMove->x++;
+//     else
+//         objectToMove->x--;
+// }

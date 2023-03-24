@@ -12,7 +12,7 @@
 #include "GameObjectStruct.h"
 
 
-/// Base class of collectibles
+/// Base class of player and ghosts
 class Character : public GameObjectStruct
 {
     
@@ -20,10 +20,14 @@ class Character : public GameObjectStruct
 
 public:
 
-void die() {
+    void Move() {
+
+    }
+
+    void die() {
 
 
-}
+    }
 
 
 };

@@ -9,28 +9,35 @@
 #ifndef SCORE
 #define SCORE
 
+#include "UI.h"
 
 
-class Score
+class Score 
 {
-private:
-    int score;
+// public:
+//     int score;
+//     UI* ui;
+//     Score(UI* uiPtr, int _score) {
+//         score = _score;
+//         ui = uiPtr;
+//     }
 
-public:
-    void UpdateScore() 
-    {
-
-    }
+// public:
+//     void UpdateScore(int scoreChange) 
+//     {
+//         score += scoreChange;
+//         ui->setScore(score);
+//     }
     
-    void DisplayUpdatedScore()
-    {
-        //Actually displaying the score can be done thorugh UI::DrawScore
-    }
+//     void DisplayUpdatedScore()
+//     {
+//         //Actually displaying the score can be done thorugh UI::DrawScore
+//     }
 
-    void GoToNextLevel()
-    {
+//     void GoToNextLevel()
+//     {
         
-    }
+//     }
 
 };
 
