@@ -17,7 +17,7 @@ class PacmanChar : public Character
 {
     
 public:
-    int slowness = 5; //Opposite of speed (it does the same, but higher is slower)
+    int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
 
     void Respawn() {
@@ -25,7 +25,7 @@ public:
 
     void Move() 
     {
-    if(dir == RIGHT) {
+        if(dir == RIGHT) {
             if(x <= 25) {
                 moveCounter++;
                 if(moveCounter > slowness) {

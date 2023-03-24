@@ -37,8 +37,9 @@ Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 /// Program entry point.
 int main(int /*argc*/, char ** /*argv*/)
 {
-    //Params for movement
-    int moveCounter;
+
+    //Parameter for collisions
+    bool wallinFront = false;
 
     std::vector<std::vector<int>> map = {{
         #include "board.def"
@@ -113,8 +114,12 @@ int main(int /*argc*/, char ** /*argv*/)
             }
         }
 
+        //Check if there is a wall in front of the character
+        ObjectPositionStruct inFrontOfCharacter = pacman.GetPosInFront();
+        std::cout << "position in front of pacman: " << inFrontOfCharacter.x << "," << inFrontOfCharacter.y << std::endl;
+
         //Move the pacman player character
-        std::cout << "pacman y: " << pacman.y << " and x" << pacman.x << " and direction" << pacman.dir << std::endl;
+        std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
         pacman.Move();
 
         // Set the score
@@ -139,10 +144,5 @@ int main(int /*argc*/, char ** /*argv*/)
     return 0;
 }
 
-// public void Move(GameObjectStruct* objectToMove)
-// {
-//     if(objectToMove->dir == RIGHT)
-//         objectToMove->x++;
-//     else
-//         objectToMove->x--;
-// }
+
+
