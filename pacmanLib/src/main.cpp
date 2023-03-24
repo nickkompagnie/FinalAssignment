@@ -161,7 +161,7 @@ int main(int /*argc*/, char ** /*argv*/)
         
 
 
-        if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] == 0) {
+        if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
 
 
 
