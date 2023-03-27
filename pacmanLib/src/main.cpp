@@ -32,6 +32,7 @@
 /// regarding multithreading issues.
 
 
+int score = 0;
 std::map<std::array<int,2>, GameObjectStruct> items;
 
 Uint32 gameUpdate(Uint32 interval, void * /*param*/)
@@ -45,7 +46,7 @@ Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 /// Program entry point.
 int main(int /*argc*/, char ** /*argv*/)
 {
-
+    
     //Parameter for collisions
     bool wallinFront = false;
 
@@ -170,8 +171,11 @@ int main(int /*argc*/, char ** /*argv*/)
             pacman.Move();
             std::array<int,2> coordinates = {pacman.x, pacman.y};
 
-            if(typeid(items[coordinates]) == typeid(GameObjectStruct)){
-            items.erase(coordinates);
+            if(typeid(items[coordinates]) == typeid(GameObjectStruct)){ //Check if something is at the current position. This is currently for all objects
+
+            items.erase(coordinates); //Remove dot 
+
+            score++;
         }
         }
 
@@ -181,7 +185,7 @@ int main(int /*argc*/, char ** /*argv*/)
        
 
         // Set the score
-        ui.setScore(17); // <-- Pass correct value to the setter
+        ui.setScore(score); // <-- Pass correct value to the setter
 
         // Set the amount of lives
         ui.setLives(2); // <-- Pass correct value to the setter
