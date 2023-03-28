@@ -101,18 +101,13 @@ public:
                 }
         }
         
+        //If a wall in front, change direction to random direction
         else {
 
         int randomvalue = rand()%4;
         std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
 
         dir = directionlist[randomvalue];
-
-    
-
-        
-            
-
 
         }
     }
