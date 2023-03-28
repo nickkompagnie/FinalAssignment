@@ -161,19 +161,24 @@ int main(int /*argc*/, char ** /*argv*/)
 
         
 
+        
+
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
-
-
+            
+            
 
             
 
             pacman.Move();
             std::array<int,2> coordinates = {pacman.x, pacman.y};
 
-            if(typeid(items[coordinates]) == typeid(GameObjectStruct)){ //Check if something is at the current position. This is currently for all objects
+            if(items[coordinates].type == DOT){ //Check if something is at the current position. This is currently for all objects
 
+            
+            
             items.erase(coordinates); //Remove dot 
+
 
             score++;
         }
