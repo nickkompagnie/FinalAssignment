@@ -17,7 +17,7 @@ class PacmanChar : public Character
 {
     
 public:
-    int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
+    int slowness = 1; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
 
     void Respawn() {

@@ -82,14 +82,28 @@ int main(int /*argc*/, char ** /*argv*/)
     testBonusItem.dir = RIGHT;
 
     Ghost ghost1;
-    ghost1.x = 4;
-    ghost1.y = 1;
+    ghost1.x = 12;
+    ghost1.y = 13;
     ghost1.type = BLINKY;
     ghost1.dir = RIGHT;
 
+    Ghost ghost2;
+    ghost2.x = 13;
+    ghost2.y = 13;
+    ghost2.type = PINKY;
+    ghost2.dir = RIGHT;
 
+    Ghost ghost3;
+    ghost3.x = 14;
+    ghost3.y = 13;
+    ghost3.type = INKY;
+    ghost3.dir = RIGHT;
 
-
+    Ghost ghost4;
+    ghost4.x = 15;
+    ghost4.y = 13;
+    ghost4.type = CLYDE;
+    ghost4.dir = RIGHT;
 
     std::vector<GameObjectStruct> dotsvector ;
     //x= 27, y = 26
@@ -190,9 +204,11 @@ int main(int /*argc*/, char ** /*argv*/)
         }
         }
 
+        //Move the ghosts
         ghost1.Move();
-
-    
+        ghost2.Move();
+        ghost3.Move();
+        ghost4.Move();  
 
         
        
@@ -216,7 +232,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
 
-        std::vector<GameObjectStruct> specialty = {pacman, testPowerup, testBonusItem,ghost1};
+        std::vector<GameObjectStruct> specialty = {testPowerup, testBonusItem, pacman, ghost1, ghost2, ghost3, ghost4};
 
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
 
