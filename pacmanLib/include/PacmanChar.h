@@ -17,7 +17,7 @@ class PacmanChar : public Character
 {
     
 public:
-    int slowness = 1; //Opposite of speed (it does the same, but higher is slower)
+    int slowness = 5; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
 
     void Respawn() {
@@ -35,7 +35,7 @@ public:
             }
             else { //Possible teleport to other side
                 if (y == 13) {
-                    x = 1;
+                    x = 0;
                 }
             }
         }
@@ -49,7 +49,7 @@ public:
             }
             else { //Possible teleport to other side
                 if (y == 13) {
-                    x = 26;
+                    x = 27;
                 }
             }
         }
