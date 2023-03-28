@@ -67,6 +67,34 @@ public:
     return posInFront;
     }
 
+    ObjectPositionStruct GetPosLeft()
+    {
+    // Calculate the position left of the character based on their direction
+    ObjectPositionStruct posLeft;
+
+    if (dir == LEFT)
+    {
+        posLeft.x = x;
+        posLeft.y = y + 1;
+    }
+    else if (dir == RIGHT)
+    {
+        posLeft.x = x;
+        posLeft.y = y - 1;
+    }
+    else if (dir == UP)
+    {
+        posLeft.x = x - 1;
+        posLeft.y = y;
+    }
+    else if (dir == DOWN)
+    {
+        posLeft.x = x + 1;
+        posLeft.y = y;
+    }
+    return posLeft;
+    }
+
 
 };
 
