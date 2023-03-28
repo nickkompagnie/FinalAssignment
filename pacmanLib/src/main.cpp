@@ -81,6 +81,16 @@ int main(int /*argc*/, char ** /*argv*/)
     testBonusItem.type = ORANGE;
     testBonusItem.dir = RIGHT;
 
+    Ghost ghost1;
+    ghost1.x = 4;
+    ghost1.y = 1;
+    ghost1.type = BLINKY;
+    ghost1.dir = RIGHT;
+
+
+
+
+
     std::vector<GameObjectStruct> dotsvector ;
     //x= 27, y = 26
     for(int i=0;i<28;i++) {
@@ -110,11 +120,7 @@ int main(int /*argc*/, char ** /*argv*/)
         }
     }
 
-    CollectibleDot testCollectibleDot;
-    testCollectibleDot.x = 4;
-    testCollectibleDot.y = 1;
-    testCollectibleDot.type = DOT;
-    testCollectibleDot.dir = RIGHT;
+
 
 
     bool quit = false;
@@ -184,6 +190,8 @@ int main(int /*argc*/, char ** /*argv*/)
         }
         }
 
+        ghost1.Move();
+
     
 
         
@@ -204,9 +212,14 @@ int main(int /*argc*/, char ** /*argv*/)
         }
 
         // Render the scene
-        std::vector<GameObjectStruct> objects = {pacman, testPowerup, testBonusItem, testCollectibleDot};
+        std::vector<GameObjectStruct> objects;
 
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
+
+        std::vector<GameObjectStruct> specialty = {pacman, testPowerup, testBonusItem,ghost1};
+
+        objects.insert(objects.end(), specialty.begin(), specialty.end() );
+
         
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())

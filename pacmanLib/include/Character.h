@@ -12,15 +12,25 @@
 #include "GameObjectStruct.h"
 #include "ObjectPositionStruct.h"
 
+std::vector<std::vector<int>> map = {{
+ #include "board.def"
+}};
+
 
 /// Base class of player and ghosts
 class Character : public GameObjectStruct
 {
 
+
+
 public:
 
 
     void Move() {
+
+    
+
+
 
     }
 
