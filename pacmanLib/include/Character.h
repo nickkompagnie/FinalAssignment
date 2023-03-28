@@ -95,9 +95,9 @@ public:
     return posLeft;
     }
 
-    int turnLeft(int direction)
+    Direction turnLeft(Direction direction)
     {
-        int newDir;
+        Direction newDir;
 
         if (direction == LEFT)
             newDir = DOWN;

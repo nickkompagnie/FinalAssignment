@@ -44,11 +44,11 @@ public:
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
 
-            if(map[leftOfCharacter.y][leftOfCharacter.x] != 1) {
+            if(map[leftOfCharacter.x][leftOfCharacter.y] != 1) {
             
                 int randomvalue = rand()%1;
                 if(randomvalue ==0) {
-                    dir = LEFT;
+                    dir = turnLeft(dir); 
                 }
                 
             }
