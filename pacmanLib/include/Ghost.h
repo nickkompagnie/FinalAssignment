@@ -13,6 +13,8 @@
 
 #include "Character.h"
 
+std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
+
 
 
 
@@ -38,12 +40,17 @@ public:
     {
 
         ObjectPositionStruct inFrontOfCharacter = GetPosInFront();
+        ObjectPositionStruct leftOfCharacter= GetPosLeft();
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
 
-            if(leftORRIGHT) {
-                dir = LEFT;
-                //dir = RIGHT;
+            if(map[leftOfCharacter.y][leftOfCharacter.x] != 1) {
+            
+                int randomvalue = rand()%1;
+                if(randomvalue ==0) {
+                    dir = LEFT;
+                }
+                
             }
 
                 
@@ -105,7 +112,7 @@ public:
         else {
 
         int randomvalue = rand()%4;
-        std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
+
 
         dir = directionlist[randomvalue];
 
