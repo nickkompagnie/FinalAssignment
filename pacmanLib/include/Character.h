@@ -103,9 +103,9 @@ public:
             newDir = DOWN;
         if (direction == UP)
             newDir = LEFT;
-        if (direction = RIGHT)
+        if (direction == RIGHT)
             newDir = UP;
-        if( direction = DOWN)
+        if( direction == DOWN)
             newDir = RIGHT;
         return newDir;
     }

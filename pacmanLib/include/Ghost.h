@@ -11,6 +11,7 @@
 #ifndef GHOST
 #define GHOST
 
+#include <iostream>
 #include "Character.h"
 
 std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
@@ -26,7 +27,7 @@ public:
     int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
     int direction = 0;
-
+    int turnLeftTimer = 0;
 
 
 
@@ -38,17 +39,23 @@ public:
     void Move() 
 
     {
-
         ObjectPositionStruct inFrontOfCharacter = GetPosInFront();
         ObjectPositionStruct leftOfCharacter= GetPosLeft();
+        turnLeftTimer++;
 
-        if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
+        if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) { //If no wall in front
 
-            if(map[leftOfCharacter.x][leftOfCharacter.y] != 1) {
-            
-                int randomvalue = rand()%1;
-                if(randomvalue ==0) {
-                    dir = turnLeft(dir); 
+            if(map[leftOfCharacter.y][leftOfCharacter.x] != 1) { //If no wall to the left
+                if(turnLeftTimer > 60) {
+                    turnLeftTimer = 0;
+                    int randomvalue = rand()%1;
+                    if(randomvalue ==0) {
+                        std::cout << "turning left" << std::endl;
+                        dir = turnLeft(dir); 
+                    }
+                    else {
+                        std::cout << "not turning left this time" << std::endl;
+                    }
                 }
                 
             }
@@ -59,53 +66,53 @@ public:
                 // Move to the direction according to the number
                 
 
-                if(dir == RIGHT) {
-                    if(x <= 27) {
-                            moveCounter++;
-                            if(moveCounter > slowness) {
-                                x++;
-                                moveCounter = 0;
-                        }
-                    }
-                    else { //Possible teleport to other side
-                        if (y == 13) {
-                            x = 1;
-                        }
+            if(dir == RIGHT) {
+                if(x <= 27) {
+                        moveCounter++;
+                        if(moveCounter > slowness) {
+                            x++;
+                            moveCounter = 0;
                     }
                 }
+                else { //Possible teleport to other side
+                    if (y == 13) {
+                        x = 0;
+                    }
+                }
+            }
 
-                else if(dir == LEFT){
-                    if(x >= 0) {
-                        moveCounter++;
-                        if(moveCounter > slowness) {
-                            x--;
-                            moveCounter = 0;
-                        }
-                    }
-                    else { //Possible teleport to other side
-                        if (y == 13) {
-                            x = 26;
-                        }
+            else if(dir == LEFT){
+                if(x >= 0) {
+                    moveCounter++;
+                    if(moveCounter > slowness) {
+                        x--;
+                        moveCounter = 0;
                     }
                 }
-                else if(dir == DOWN){
-                    if(y <= 26) {
-                        moveCounter++;
-                        if(moveCounter > slowness) {
-                            y++;
-                            moveCounter = 0;
-                        }
+                else { //Possible teleport to other side
+                    if (y == 13) {
+                        x = 27;
                     }
                 }
-                else if(dir == UP){
-                    if(y >= 0) {
-                        moveCounter++;
-                        if(moveCounter > slowness) {
-                            y--;
-                            moveCounter = 0;
-                        }
+            }
+            else if(dir == DOWN){
+                if(y <= 26) {
+                    moveCounter++;
+                    if(moveCounter > slowness) {
+                        y++;
+                        moveCounter = 0;
                     }
                 }
+            }
+            else if(dir == UP){
+                if(y >= 0) {
+                    moveCounter++;
+                    if(moveCounter > slowness) {
+                        y--;
+                        moveCounter = 0;
+                    }
+                }
+            }
         }
         
         //If a wall in front, change direction to random direction
