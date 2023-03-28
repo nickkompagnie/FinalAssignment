@@ -95,6 +95,20 @@ public:
     return posLeft;
     }
 
+    int turnLeft(int direction)
+    {
+        int newDir;
+
+        if (direction == LEFT)
+            newDir = DOWN;
+        if (direction == UP)
+            newDir = LEFT;
+        if (direction = RIGHT)
+            newDir = UP;
+        if( direction = DOWN)
+            newDir = RIGHT;
+        return newDir;
+    }
 
 };
 
