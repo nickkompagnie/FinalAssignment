@@ -41,59 +41,64 @@ public:
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
 
-            
-            // Check if wall is in front
-            // Generate random number between 0 and 3
-            // Move to the direction according to the number
-            
+            if(leftORRIGHT) {
+                dir = LEFT;
+                //dir = RIGHT;
+            }
 
-            if(dir == RIGHT) {
-                if(x <= 27) {
+                
+                // Check if wall is in front
+                // Generate random number between 0 and 3
+                // Move to the direction according to the number
+                
+
+                if(dir == RIGHT) {
+                    if(x <= 27) {
+                            moveCounter++;
+                            if(moveCounter > slowness) {
+                                x++;
+                                moveCounter = 0;
+                        }
+                    }
+                    else { //Possible teleport to other side
+                        if (y == 13) {
+                            x = 1;
+                        }
+                    }
+                }
+
+                else if(dir == LEFT){
+                    if(x >= 0) {
                         moveCounter++;
                         if(moveCounter > slowness) {
-                            x++;
+                            x--;
                             moveCounter = 0;
+                        }
+                    }
+                    else { //Possible teleport to other side
+                        if (y == 13) {
+                            x = 26;
+                        }
                     }
                 }
-                else { //Possible teleport to other side
-                    if (y == 13) {
-                        x = 1;
+                else if(dir == DOWN){
+                    if(y <= 26) {
+                        moveCounter++;
+                        if(moveCounter > slowness) {
+                            y++;
+                            moveCounter = 0;
+                        }
                     }
                 }
-            }
-
-            else if(dir == LEFT){
-                if(x >= 0) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        x--;
-                        moveCounter = 0;
+                else if(dir == UP){
+                    if(y >= 0) {
+                        moveCounter++;
+                        if(moveCounter > slowness) {
+                            y--;
+                            moveCounter = 0;
+                        }
                     }
                 }
-                else { //Possible teleport to other side
-                    if (y == 13) {
-                        x = 26;
-                    }
-                }
-            }
-            else if(dir == DOWN){
-                if(y <= 26) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        y++;
-                        moveCounter = 0;
-                    }
-                }
-            }
-            else if(dir == UP){
-                if(y >= 0) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        y--;
-                        moveCounter = 0;
-                    }
-                }
-            }
         }
         
         else {
