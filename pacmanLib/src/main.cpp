@@ -90,38 +90,9 @@ int main(int /*argc*/, char ** /*argv*/)
         energiser.dir = RIGHT;
 
         items.insert(std::pair<std::array<int,2>,GameObjectStruct>(powerUpCoordinates[i],energiser));
-
-
-
-
     }
 
 
-
-
-    // Powerup upLeft;
-    // upLeft.x = 1;
-    // upLeft.y = 1;
-    // upLeft.type = ENERGIZER;
-    // upLeft.dir = RIGHT;
-
-    // Powerup upRight;
-    // upRight.x = 26;
-    // upRight.y = 1;
-    // upRight.type = ENERGIZER;
-    // upRight.dir = RIGHT;
-
-    // Powerup downLeft;
-    // downLeft.x = 1;
-    // downLeft.y = 25;
-    // downLeft.type = ENERGIZER;
-    // downLeft.dir = RIGHT;
-
-    // Powerup downRight;
-    // downRight.x = 26;
-    // >downRight.y = 25;
-    // downRight.type = ENERGIZER;
-    // downRight.dir = RIGHT;
 
 
 
@@ -260,6 +231,17 @@ int main(int /*argc*/, char ** /*argv*/)
             if(items[coordinates].type == DOT){ //Check if there is a dot at the current position
             items.erase(coordinates); //Remove dot 
             score++; //Increase score            
+            }
+
+            if(items[coordinates].type == ENERGsIZER){
+                items.erase(coordinates);
+                std::cout << "ENERGIZER" << std::endl;
+                // TODO: Start timer
+                // Ghost becomes scared and edible
+                
+
+
+                
             }
         }
 
