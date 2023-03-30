@@ -242,6 +242,10 @@ int main(int /*argc*/, char ** /*argv*/)
                 std::cout << "ENERGIZER" << std::endl;
                 scaredtimer = 300;
 
+                for(int i = 0; i<4;i++){
+                ghostArray[i].type = SCARED;
+                }
+
 
 
                 // TODO: Start timer
@@ -255,22 +259,19 @@ int main(int /*argc*/, char ** /*argv*/)
             }
         }
 
-        std::array<Type,4> typeArray = {BLINKY,BLINKY,BLINKY,BLINKY};
+        std::array<Type,4> typeArray = {BLINKY,PINKY,INKY,CLYDE};
 
 
         if(scaredtimer>0) {
             scaredtimer--;
-            for(int i = 0; i<4;i++){
-                ghostArray[i].type = SCARED;
-            }
         }
 
         
         else{
             ghostArray[0].type = typeArray[0];
-            ghostArray[1].type = PINKY;
-            ghostArray[2].type = INKY;
-            ghostArray[3].type = CLYDE;
+            ghostArray[1].type = typeArray[1];
+            ghostArray[2].type = typeArray[2];
+            ghostArray[3].type = typeArray[3];
 
         }
 
@@ -279,9 +280,10 @@ int main(int /*argc*/, char ** /*argv*/)
         for(int i = 0; i<4;i++){
             if((ghostArray[i].x == pacman.x) && (ghostArray[i].y == pacman.y)) {
 
-                if(scaredtimer>0) {
+                if(ghostArray[i].type == SCARED) {
                     ghostArray[i].ResetPos();
                     score++;
+                    ghostArray[i].type = typeArray[i];
                 }
                 else{
                     pacman.ResetPos();
