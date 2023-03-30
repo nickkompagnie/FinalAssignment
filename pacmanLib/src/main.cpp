@@ -206,7 +206,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
         //Every 25 points, an orange will appear which, if eaten, will increase the points
-        if(score % 25 == 0) {
+        if((score % 25 == 0) && (score != 0)){
 
             score++; //Increase score by 1 to ensure this only will happen once every 25 points
 
