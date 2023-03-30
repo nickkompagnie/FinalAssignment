@@ -198,7 +198,7 @@ int main(int /*argc*/, char ** /*argv*/)
         // std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
         
-        if(score==50 || score == 100 || score ==150 || score == 200) {
+        if(score % 25 == 0) {
             score++;
 
             std::cout << "Deploying ORANGE" << std::endl;
