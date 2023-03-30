@@ -105,6 +105,11 @@ int main(int /*argc*/, char ** /*argv*/)
     ghost4.type = CLYDE;
     ghost4.dir = RIGHT;
 
+
+    //Set these ghosts in an array
+
+    std::array<Ghost,4> ghostarray = {ghost1,ghost2,ghost3,ghost4};
+
     std::vector<GameObjectStruct> dotsvector ;
     //x= 27, y = 26
     for(int i=0;i<28;i++) {
@@ -174,10 +179,10 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //Check if there is a wall in front of the character
         ObjectPositionStruct inFrontOfCharacter = pacman.GetPosInFront();
-        std::cout << "position in front of pacman: " << inFrontOfCharacter.x << "," << inFrontOfCharacter.y << std::endl;
+        // std::cout << "position in front of pacman: " << inFrontOfCharacter.x << "," << inFrontOfCharacter.y << std::endl;
 
         //Move the pacman player character
-        std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
+        // std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
         
 
@@ -186,25 +191,33 @@ int main(int /*argc*/, char ** /*argv*/)
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
             
-            
-
-            
 
             pacman.Move();
             std::array<int,2> coordinates = {pacman.x, pacman.y};
 
-            if(items[coordinates].type == DOT){ //Check if something is at the current position. This is currently for all objects
-
-            
-            
+            if(items[coordinates].type == DOT){ //Check if dot is at the current position. This is currently for all objects
             items.erase(coordinates); //Remove dot 
+            score++; //Increase score by 1
 
-
-            score++;
-        }
         }
 
-        //Move the ghosts
+            
+
+        
+        }
+
+        // Methode 1
+        std::array<Ghost,4> :: iterator iter2;
+        for(iter2 =ghostarray.begin(); iter2!= ghostarray.end(); ++iter2){
+           iter2->Move();
+        }
+      
+        // Methode 2
+        for(int i=0; i<4;i++) {
+            ghostarray[i].Move();
+
+        }
+        //Methode 3
         ghost1.Move();
         ghost2.Move();
         ghost3.Move();
