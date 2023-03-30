@@ -82,6 +82,12 @@ int main(int /*argc*/, char ** /*argv*/)
     testBonusItem.type = ORANGE;
     testBonusItem.dir = RIGHT;
 
+    GameObjectStruct decorativeWall;
+    decorativeWall.x = 0;
+    decorativeWall.y = 0;
+    decorativeWall.type = WALL;
+    decorativeWall.dir = RIGHT;
+
     Ghost ghost1;
     ghost1.x = 12;
     ghost1.y = 13;
@@ -106,6 +112,12 @@ int main(int /*argc*/, char ** /*argv*/)
     ghost4.type = CLYDE;
     ghost4.dir = RIGHT;
 
+    pacman.SetStartPos();
+    ghost1.SetStartPos();
+    ghost2.SetStartPos();
+    ghost3.SetStartPos();
+    ghost4.SetStartPos();
+
     std::vector<GameObjectStruct> dotsvector ;
     //x= 27, y = 26
     for(int i=0;i<28;i++) {
@@ -121,6 +133,7 @@ int main(int /*argc*/, char ** /*argv*/)
                 dot.x = i;
                 dot.y = j;
                 dot.type = DOT;
+                dot.dir = RIGHT;
 
                 std::array<int,2> coordinates = {i,j};
 
@@ -199,7 +212,29 @@ int main(int /*argc*/, char ** /*argv*/)
         //Ghost collisions
         if((ghost1.x == pacman.x) && (ghost1.y == pacman.y))
         {
+            pacman.ResetPos();
             ghost1.ResetPos();
+            lives --;
+            ui.setLives(lives);
+        }
+        if((ghost2.x == pacman.x) && (ghost2.y == pacman.y))
+        {
+            pacman.ResetPos();
+            ghost2.ResetPos();
+            lives --;
+            ui.setLives(lives);
+        }
+        if((ghost3.x == pacman.x) && (ghost3.y == pacman.y))
+        {
+            pacman.ResetPos();
+            ghost3.ResetPos();
+            lives --;
+            ui.setLives(lives);
+        }
+        if((ghost4.x == pacman.x) && (ghost4.y == pacman.y))
+        {
+            pacman.ResetPos();
+            ghost4.ResetPos();
             lives --;
             ui.setLives(lives);
         }
@@ -207,14 +242,11 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //Move the ghosts
         ghost1.Move();
-        // ghost2.Move();
-        // ghost3.Move();
-        // ghost4.Move();  
+        ghost2.Move();
+        ghost3.Move();
+        ghost4.Move();  
 
-        ghost1.SetStartPos();
-        // ghost2.SetStartPos();
-        // ghost3.SetStartPos();
-        // ghost4.SetStartPos();
+        
 
         // Set the score
         ui.setScore(score); // <-- Pass correct value to the setter
@@ -229,20 +261,20 @@ int main(int /*argc*/, char ** /*argv*/)
         for(iter =items.begin(); iter != items.end(); ++iter){
             dotsvector.push_back(iter->second);
         }
+        
 
         // Render the scene
         std::vector<GameObjectStruct> objects;
+        std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
 
+        std::vector<GameObjectStruct> specialty = {testPowerup, testBonusItem, decorativeWall, pacman, ghost1, ghost2, ghost3, ghost4};
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
-
-        std::vector<GameObjectStruct> specialty = {testPowerup, testBonusItem, pacman, ghost1}; //ghost2, ghost3, ghost4
-
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
-
         
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
         ui.update(objects);
+        std::cout << "objects rendered" << std::endl;
 
         while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout)) {
             // ... do work until timeout has elapsed

@@ -21,7 +21,8 @@ std::vector<std::vector<int>> map = {{
 class Character : public GameObjectStruct
 {
 
-
+private:
+    ObjectPositionStruct startPos;
 
 public:
 
@@ -37,6 +38,16 @@ public:
     void Die() {
 
 
+    }
+
+    void SetStartPos() {
+        startPos.x = x;
+        startPos.y = y;
+    }
+
+    void ResetPos() {
+        x = startPos.x;
+        y = startPos.y;
     }
 
     ObjectPositionStruct GetPosInFront()

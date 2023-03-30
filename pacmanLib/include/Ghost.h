@@ -23,10 +23,9 @@ std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
 class Ghost : public Character
 {
 private:
-    ObjectPositionStruct startPos;
     
 public:
-    int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
+    int slowness = 3; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
     int direction = 0;
     int turnLeftTimer = 0;
@@ -36,16 +35,6 @@ public:
     void Respawn() {
 
 
-    }
-
-    void SetStartPos() {
-        startPos.x = x;
-        startPos.y = y;
-    }
-
-    void ResetPos() {
-        x = startPos.x;
-        y = startPos.y;
     }
 
     void Move() 
