@@ -25,7 +25,7 @@ class Ghost : public Character
 private:
     
 public:
-    int slowness = 3; //Opposite of speed (it does the same, but higher is slower)
+    int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
     int direction = 0;
     int turnLeftTimer = 0;
@@ -40,6 +40,11 @@ public:
     void Move() 
 
     {
+        if(moveCounter < slowness) {
+            moveCounter++;
+            return;
+        }
+
         ObjectPositionStruct inFrontOfCharacter = GetPosInFront();
         ObjectPositionStruct leftOfCharacter= GetPosLeft();
         turnLeftTimer++;

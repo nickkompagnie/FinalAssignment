@@ -25,6 +25,11 @@ public:
 
     void Move() 
     {
+        if(moveCounter < slowness) {
+            moveCounter++;
+            return;
+        }
+
         if(dir == RIGHT) {
             if(x <= 27) {
                 x++;
