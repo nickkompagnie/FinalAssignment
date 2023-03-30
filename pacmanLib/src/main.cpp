@@ -65,8 +65,8 @@ int main(int /*argc*/, char ** /*argv*/)
 
     // Example object, this can be removed later
     PacmanChar pacman;
-    pacman.x = 1;
-    pacman.y = 1;
+    pacman.x = 13;
+    pacman.y = 5;
     pacman.type = PACMAN;
     pacman.dir = RIGHT;
 
@@ -82,6 +82,8 @@ int main(int /*argc*/, char ** /*argv*/)
     
     powerUpCoordinates = {upLeft,upRight,downLeft,downRight};
 
+
+    std::vector<GameObjectStruct> bonusses;
     for(int i=0; i<4; i++) {
         Powerup energiser;
 
@@ -89,21 +91,8 @@ int main(int /*argc*/, char ** /*argv*/)
         energiser.y = powerUpCoordinates[i][1];
         energiser.type = ENERGIZER;
         energiser.dir = RIGHT;
-
         items.insert(std::pair<std::array<int,2>,GameObjectStruct>(powerUpCoordinates[i],energiser));
     }
-
-
-
-
-
-
-
-    BonusItem testBonusItem;
-    testBonusItem.x = 3;
-    testBonusItem.y = 1;
-    testBonusItem.type = ORANGE;
-    testBonusItem.dir = RIGHT;
 
     GameObjectStruct decorativeWall;
     decorativeWall.x = 0;
@@ -137,6 +126,7 @@ int main(int /*argc*/, char ** /*argv*/)
     ghost4.dir = RIGHT;
 
     std::array<Ghost,4> ghostArray = {ghost1,ghost2,ghost3,ghost4};
+    std::array<Type,4> typeArray = {BLINKY,PINKY,INKY,CLYDE};
 
     pacman.SetStartPos();
 
@@ -146,32 +136,18 @@ int main(int /*argc*/, char ** /*argv*/)
 
 
     std::vector<GameObjectStruct> dotsvector ;
-    //x= 27, y = 26
-
     for(int i=0;i<28;i++) {
         for(int j=0;j<27;j++) {
             if(map[j][i]==0) {
-                
-                // CollectibleDot (i.num2string() +j.num2sting());
-                // (i.num2string() +j.num2sting()).x = i;
-                // (i.num2string() +j.num2sting()).y = j;   
-                // (i.num2string() +j.num2sting()).type = DOT;
 
                 CollectibleDot dot;
                 dot.x = i;
                 dot.y = j;
                 dot.type = DOT;
                 dot.dir = RIGHT;
-                
 
                 std::array<int,2> coordinates = {i,j};
-
-
                 items.insert(std::pair<std::array<int,2>,GameObjectStruct>(coordinates,dot));
-
-              
-
-
 
             }
         }
@@ -223,7 +199,43 @@ int main(int /*argc*/, char ** /*argv*/)
         // std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
         
+        if(score==50 || score == 100 || score ==150 || score == 200) {
+            score++;
 
+            std::cout << "Deploying ORANGE" << std::endl;
+
+            BonusItem bonus;
+            bonus.type = ORANGE;
+        
+           
+            bool placeFound = false;
+
+            while(!placeFound) {
+
+            int x = rand()%25;
+            int y = rand()%25;
+            
+
+            if(map[y][x] != 1) {
+                bonus.x = x;
+                bonus.y = y;
+                bonus.dir = RIGHT;
+            
+                
+                std::array<int,2> coordinatesBonus = {x,y};
+                items.erase(coordinatesBonus);
+
+                items.insert(std::pair<std::array<int,2>,GameObjectStruct>(coordinatesBonus,bonus));
+                std::cout << "Place for orange has been found" << x << " " << y << std::endl;
+                placeFound = true;
+
+                
+
+            }
+
+            }
+
+        }
         
 
 
@@ -246,20 +258,23 @@ int main(int /*argc*/, char ** /*argv*/)
                 ghostArray[i].type = SCARED;
                 }
 
-
-
-                // TODO: Start timer
-                // Ghost becomes scared and edible
-
-
-                
-
-
                 
             }
+
+            if(items[coordinates].type == ORANGE){
+                std::cout << "Collision with ORANGE" << std::endl;
+                items.erase(coordinates);
+                std::cout << "BONUS" << std::endl;
+                score= score+20;
+
+            }
+              
+
+    
+                
         }
 
-        std::array<Type,4> typeArray = {BLINKY,PINKY,INKY,CLYDE};
+        
 
 
         if(scaredtimer>0) {
@@ -268,10 +283,11 @@ int main(int /*argc*/, char ** /*argv*/)
 
         
         else{
-            ghostArray[0].type = typeArray[0];
-            ghostArray[1].type = typeArray[1];
-            ghostArray[2].type = typeArray[2];
-            ghostArray[3].type = typeArray[3];
+            
+            for(int i=0;i<4;i++){
+                ghostArray[i].type = typeArray[i];
+            }
+      
 
         }
 
@@ -282,7 +298,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
                 if(ghostArray[i].type == SCARED) {
                     ghostArray[i].ResetPos();
-                    score++;
+                    score = score+10;
                     ghostArray[i].type = typeArray[i];
                 }
                 else{
@@ -298,20 +314,13 @@ int main(int /*argc*/, char ** /*argv*/)
 
                 
         }
+
         
-
-
+        
         //Move the ghosts
         for(int i = 0; i<4;i++){
-
             ghostArray[i].Move();
         }
-
-
-                
-        
-
-        
 
         // Set the score
         ui.setScore(score); // <-- Pass correct value to the setter
@@ -322,7 +331,6 @@ int main(int /*argc*/, char ** /*argv*/)
         dotsvector.clear();
 
         std::map<std::array<int,2>, GameObjectStruct> :: iterator iter;
-
         for(iter =items.begin(); iter != items.end(); ++iter){
             dotsvector.push_back(iter->second);
         }
@@ -332,9 +340,11 @@ int main(int /*argc*/, char ** /*argv*/)
         std::vector<GameObjectStruct> objects;
         // std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
 
-        std::vector<GameObjectStruct> specialty = {testBonusItem, decorativeWall, pacman, ghostArray[0], ghostArray[1], ghostArray[2], ghostArray[3]};
+        std::vector<GameObjectStruct> specialty = {decorativeWall, pacman, ghostArray[0], ghostArray[1], ghostArray[2], ghostArray[3]};
+
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
+        objects.insert(objects.end(),bonusses.begin(),bonusses.end());
         
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
