@@ -38,8 +38,6 @@ std::map<std::array<int,2>, GameObjectStruct> items;
 
 Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 {
-    // Do game loop update here
-    //std::cout << "testy each update" << std::endl;
 
     return interval;
 }
@@ -51,27 +49,29 @@ int main(int /*argc*/, char ** /*argv*/)
     //Parameter for lives
     int lives = 3;
 
+    //Create a 2D vector in which the walls an pathways are imported
     std::vector<std::vector<int>> map = {{
         #include "board.def"
     }};
 
     // Create a new ui object
-    UI ui(map); // <-- use map from your game objects.
+    UI ui(map); 
 
     // Start timer for game update, call this function every 100 ms.
     SDL_TimerID timer_id =
         SDL_AddTimer(100, gameUpdate, static_cast<void *>(nullptr));
 
-    // Example object, this can be removed later
+
+    // Create the pacman
     PacmanChar pacman;
     pacman.x = 13;
     pacman.y = 5;
     pacman.type = PACMAN;
     pacman.dir = RIGHT;
 
-    // Powerups
 
 
+    //Array to store every coordinate for the powerups
     std::array<std::array<int,2>,4> powerUpCoordinates;
 
     std::array<int,2> upLeft = {1,1};
@@ -79,62 +79,73 @@ int main(int /*argc*/, char ** /*argv*/)
     std::array<int,2> downLeft = {1,25};
     std::array<int,2> downRight = {26,25};
     
+    //Save all the coordinates in the array
     powerUpCoordinates = {upLeft,upRight,downLeft,downRight};
 
-
+    //Vector to store the bonusses in
     std::vector<GameObjectStruct> bonusses;
+
+    //Create every ENERGIZER, based on the previously defined coordinates
     for(int i=0; i<4; i++) {
         Powerup energiser;
-
         energiser.x =powerUpCoordinates[i][0];
         energiser.y = powerUpCoordinates[i][1];
         energiser.type = ENERGIZER;
         energiser.dir = RIGHT;
+
+        //Insert these objects in the ITEMS map, with the according coordinates
         items.insert(std::pair<std::array<int,2>,GameObjectStruct>(powerUpCoordinates[i],energiser));
     }
 
+    //Quick bug fix
     GameObjectStruct decorativeWall;
     decorativeWall.x = 0;
     decorativeWall.y = 0;
     decorativeWall.type = WALL;
     decorativeWall.dir = RIGHT;
 
+    //Initialize all ghosts
 
-    Ghost ghost1;
-    ghost1.x = 12;
-    ghost1.y = 13;
-    ghost1.type = BLINKY;
-    ghost1.dir = RIGHT;
+    //Array to store every coordinate for the powerups
 
-    Ghost ghost2;
-    ghost2.x = 13;
-    ghost2.y = 13;
-    ghost2.type = PINKY;
-    ghost2.dir = RIGHT;
 
-    Ghost ghost3;
-    ghost3.x = 14;
-    ghost3.y = 13;
-    ghost3.type = INKY;
-    ghost3.dir = RIGHT;
-
-    Ghost ghost4;
-    ghost4.x = 15;
-    ghost4.y = 13;
-    ghost4.type = CLYDE;
-    ghost4.dir = RIGHT;
-
-    std::array<Ghost,4> ghostArray = {ghost1,ghost2,ghost3,ghost4};
+    std::array<int,2> blinky = {12,13};
+    std::array<int,2> pinky = {13,13};
+    std::array<int,2> inky = {14,13};
+    std::array<int,2> clyde = {15,13};
+    
+    //Save all the coordinates in the array
+    std::array<std::array<int,2>,4> ghostCoordinates = {blinky,pinky,inky,clyde};
     std::array<Type,4> typeArray = {BLINKY,PINKY,INKY,CLYDE};
 
+    std::array<Ghost,4> ghostArray;
+
+
+    //Make all 4 ghosts
+    for(int i=0; i<4; i++){
+        Ghost ghost;
+        ghost.x = ghostCoordinates[i][0];
+        ghost.y = ghostCoordinates[i][1];
+        ghost.type = typeArray[i];
+        ghost.dir = RIGHT;
+        ghostArray[i] = ghost;
+
+    }
+
+
+
+    //Set start position for PACMAN
     pacman.SetStartPos();
 
+    //Set start position for Ghosts
     for(int i = 0; i<4;i++){
         ghostArray[i].SetStartPos();
     }
 
-
+    //Create the dots in the board:
     std::vector<GameObjectStruct> dotsvector ;
+
+    //Check in every entry of the map if a wall is present. If not, create a dot object and insert it with the coordinates in the items map.
     for(int i=0;i<28;i++) {
         for(int j=0;j<27;j++) {
             if(map[j][i]==0) {
@@ -192,79 +203,79 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //Check if there is a wall in front of the character
         ObjectPositionStruct inFrontOfCharacter = pacman.GetPosInFront();
-        // std::cout << "position in front of pacman: " << inFrontOfCharacter.x << "," << inFrontOfCharacter.y << std::endl;
 
-        //Move the pacman player character
-        // std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
-        
+        //Every 25 points, an orange will appear which, if eaten, will increase the points
         if(score % 25 == 0) {
-            score++;
 
-            std::cout << "Deploying ORANGE" << std::endl;
+            score++; //Increase score by 1 to ensure this only will happen once every 25 points
 
+            //Initiate bonus item
             BonusItem bonus;
             bonus.type = ORANGE;
-        
-           
+
             bool placeFound = false;
 
+            //A random x and y coordinate will be checked for the presence of a wall. If no wall is present, the orange will be placed and the while loop is exited.
             while(!placeFound) {
 
-            int x = rand()%25;
-            int y = rand()%25;
-            
-
-            if(map[y][x] != 1) {
-                bonus.x = x;
-                bonus.y = y;
-                bonus.dir = RIGHT;
-            
+                int x = rand()%25;
+                int y = rand()%25;
                 
-                std::array<int,2> coordinatesBonus = {x,y};
-                items.erase(coordinatesBonus);
+                //Check for wall
+                if(map[y][x] != 1) {
+                    bonus.x = x;
+                    bonus.y = y;
+                    bonus.dir = RIGHT;
+                    std::array<int,2> coordinatesBonus = {x,y};
 
-                items.insert(std::pair<std::array<int,2>,GameObjectStruct>(coordinatesBonus,bonus));
-                std::cout << "Place for orange has been found" << x << " " << y << std::endl;
-                placeFound = true;
+                    //Remove the current item, if there is any.
+                    items.erase(coordinatesBonus);
 
-                
+                    //Insert new item
+                    items.insert(std::pair<std::array<int,2>,GameObjectStruct>(coordinatesBonus,bonus));
 
-            }
+                    //Set boolean to true to indicate that while loop can be exited.
+                    placeFound = true;
+
+                    
+
+                }
 
             }
 
         }
         
 
-
+        //Check if there is a wall in front of the character, if not, proceed.
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
             
             pacman.Move();
+
             std::array<int,2> coordinates = {pacman.x, pacman.y};
 
+            //Collision check for DOT
             if(items[coordinates].type == DOT){ //Check if there is a dot at the current position
             items.erase(coordinates); //Remove dot 
             score++; //Increase score            
             }
 
+            //Collision check for ENERGIZER
             if(items[coordinates].type == ENERGIZER){
-                items.erase(coordinates);
-                std::cout << "ENERGIZER" << std::endl;
-                scaredtimer = 300;
+                items.erase(coordinates);               //Remove the item
+                scaredtimer = 300;                      
 
-                for(int i = 0; i<4;i++){
+                for(int i = 0; i<4;i++){                //Set all ghosts to SCARED mode
                 ghostArray[i].type = SCARED;
                 }
 
                 
             }
-
+            
+            //Collision check for ORANGE
             if(items[coordinates].type == ORANGE){
-                std::cout << "Collision with ORANGE" << std::endl;
-                items.erase(coordinates);
-                std::cout << "BONUS" << std::endl;
-                score= score+20;
+                items.erase(coordinates);               //Remove the item
+                score= score+20;                        //Gain 20 points
 
             }
               
@@ -273,14 +284,12 @@ int main(int /*argc*/, char ** /*argv*/)
                 
         }
 
-        
-
-
+        //Logic to decrease the running timer.
         if(scaredtimer>0) {
             scaredtimer--;
         }
 
-        
+        //If the timer is not running, make sure that the ghosts are not scared. This is mainly when the timer has expired.
         else{
             
             for(int i=0;i<4;i++){
@@ -290,21 +299,24 @@ int main(int /*argc*/, char ** /*argv*/)
 
         }
 
-        //Ghost collisions
-
+        
+        //For every Ghost, check if the coordinates of the pacman are equal.
         for(int i = 0; i<4;i++){
             if((ghostArray[i].x == pacman.x) && (ghostArray[i].y == pacman.y)) {
-
+                
+                //If ghosts are scared:
                 if(ghostArray[i].type == SCARED) {
-                    ghostArray[i].ResetPos();
-                    score = score+10;
-                    ghostArray[i].type = typeArray[i];
+                    ghostArray[i].ResetPos();           //Reset the position
+                    score = score+10;                   //Player gains 10 points
+                    ghostArray[i].type = typeArray[i];  //Reset the type mode to default for this ghost
                 }
+
+                //If ghosts are not scared
                 else{
-                    pacman.ResetPos();
-                    ghostArray[i].ResetPos();
-                    lives --;
-                    ui.setLives(lives);
+                    pacman.ResetPos();                    //Place pacmanplayer back to starting position           
+                    ghostArray[i].ResetPos();             //Place ghost back to starting position
+                    lives --;                             //Reduce lives by 1
+                    ui.setLives(lives);                   
                 }
 
 
@@ -314,8 +326,7 @@ int main(int /*argc*/, char ** /*argv*/)
                 
         }
 
-        
-        
+    
         //Move the ghosts
         for(int i = 0; i<4;i++){
             ghostArray[i].Move();
@@ -329,6 +340,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
         dotsvector.clear();
 
+
         std::map<std::array<int,2>, GameObjectStruct> :: iterator iter;
         for(iter =items.begin(); iter != items.end(); ++iter){
             dotsvector.push_back(iter->second);
@@ -339,19 +351,19 @@ int main(int /*argc*/, char ** /*argv*/)
         std::vector<GameObjectStruct> objects;
         // std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
 
+        //Collect the specialties
         std::vector<GameObjectStruct> specialty = {decorativeWall, pacman, ghostArray[0], ghostArray[1], ghostArray[2], ghostArray[3]};
 
+        //Objects placed in the objects container in a specific order, to ensure that the objects are rendered correctly. 
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
         objects.insert(objects.end(),bonusses.begin(),bonusses.end());
-        
-        // ^-- Your code should provide this vector somehow (e.g.
-        // game->getStructs())
+
         ui.update(objects);
-        // std::cout << "objects rendered" << std::endl;
+        
 
         while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout)) {
-            // ... do work until timeout has elapsed
+           
         }
     }
 
