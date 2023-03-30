@@ -69,12 +69,63 @@ int main(int /*argc*/, char ** /*argv*/)
     pacman.type = PACMAN;
     pacman.dir = RIGHT;
 
-    // Call game init code here
-    Powerup testPowerup;
-    testPowerup.x = 2;
-    testPowerup.y = 1;
-    testPowerup.type = ENERGIZER;
-    testPowerup.dir = RIGHT;
+    // Powerups
+
+
+    std::array<std::array<int,2>,4> powerUpCoordinates;
+
+    std::array<int,2> upLeft = {1,1};
+    std::array<int,2> upRight = {26,1};
+    std::array<int,2> downLeft = {1,25};
+    std::array<int,2> downRight = {26,25};
+    
+    powerUpCoordinates = {upLeft,upRight,downLeft,downRight};
+
+    for(int i=0; i<4; i++) {
+        Powerup energiser;
+
+        energiser.x =powerUpCoordinates[i][0];
+        energiser.y = powerUpCoordinates[i][1];
+        energiser.type = ENERGIZER;
+        energiser.dir = RIGHT;
+
+        items.insert(std::pair<std::array<int,2>,GameObjectStruct>(powerUpCoordinates[i],energiser));
+
+
+
+
+    }
+
+
+
+
+    // Powerup upLeft;
+    // upLeft.x = 1;
+    // upLeft.y = 1;
+    // upLeft.type = ENERGIZER;
+    // upLeft.dir = RIGHT;
+
+    // Powerup upRight;
+    // upRight.x = 26;
+    // upRight.y = 1;
+    // upRight.type = ENERGIZER;
+    // upRight.dir = RIGHT;
+
+    // Powerup downLeft;
+    // downLeft.x = 1;
+    // downLeft.y = 25;
+    // downLeft.type = ENERGIZER;
+    // downLeft.dir = RIGHT;
+
+    // Powerup downRight;
+    // downRight.x = 26;
+    // >downRight.y = 25;
+    // downRight.type = ENERGIZER;
+    // downRight.dir = RIGHT;
+
+
+
+
 
     BonusItem testBonusItem;
     testBonusItem.x = 3;
@@ -87,6 +138,7 @@ int main(int /*argc*/, char ** /*argv*/)
     decorativeWall.y = 0;
     decorativeWall.type = WALL;
     decorativeWall.dir = RIGHT;
+
 
     Ghost ghost1;
     ghost1.x = 12;
@@ -120,6 +172,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
     std::vector<GameObjectStruct> dotsvector ;
     //x= 27, y = 26
+
     for(int i=0;i<28;i++) {
         for(int j=0;j<27;j++) {
             if(map[j][i]==0) {
@@ -134,6 +187,7 @@ int main(int /*argc*/, char ** /*argv*/)
                 dot.y = j;
                 dot.type = DOT;
                 dot.dir = RIGHT;
+                
 
                 std::array<int,2> coordinates = {i,j};
 
@@ -188,10 +242,10 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //Check if there is a wall in front of the character
         ObjectPositionStruct inFrontOfCharacter = pacman.GetPosInFront();
-        std::cout << "position in front of pacman: " << inFrontOfCharacter.x << "," << inFrontOfCharacter.y << std::endl;
+        // std::cout << "position in front of pacman: " << inFrontOfCharacter.x << "," << inFrontOfCharacter.y << std::endl;
 
         //Move the pacman player character
-        std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
+        // std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
         
 
@@ -265,16 +319,16 @@ int main(int /*argc*/, char ** /*argv*/)
 
         // Render the scene
         std::vector<GameObjectStruct> objects;
-        std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
+        // std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
 
-        std::vector<GameObjectStruct> specialty = {testPowerup, testBonusItem, decorativeWall, pacman, ghost1, ghost2, ghost3, ghost4};
+        std::vector<GameObjectStruct> specialty = {testBonusItem, decorativeWall, pacman, ghost1, ghost2, ghost3, ghost4};
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
         
         // ^-- Your code should provide this vector somehow (e.g.
         // game->getStructs())
         ui.update(objects);
-        std::cout << "objects rendered" << std::endl;
+        // std::cout << "objects rendered" << std::endl;
 
         while (!SDL_TICKS_PASSED(SDL_GetTicks(), timeout)) {
             // ... do work until timeout has elapsed

@@ -51,7 +51,7 @@ public:
                     turnLeftTimer = 0;
                     int randomvalue = rand()%1;
                     if(randomvalue ==0) {
-                        std::cout << "turning left" << std::endl;
+                        // std::cout << "turning left" << std::endl;
                         dir = turnLeft(dir); 
                     }
                     else {
