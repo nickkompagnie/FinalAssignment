@@ -32,7 +32,7 @@
 /// regarding multithreading issues.
 
 
-int score = 1;
+int score = 0;
 int scaredtimer = 0;
 std::map<std::array<int,2>, GameObjectStruct> items;
 
@@ -198,7 +198,7 @@ int main(int /*argc*/, char ** /*argv*/)
         // std::cout << "pacman y: " << pacman.y << " and x " << pacman.x << " and direction " << pacman.dir << std::endl;
 
         
-        if(score % 25 == 0) {
+        if((score % 25 == 0) && (score != 0)) {
             score++;
 
             std::cout << "Deploying ORANGE" << std::endl;
