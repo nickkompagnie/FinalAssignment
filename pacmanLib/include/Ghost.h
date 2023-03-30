@@ -22,6 +22,8 @@ std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
 /// Class of pacman player character
 class Ghost : public Character
 {
+private:
+    ObjectPositionStruct startPos;
     
 public:
     int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
@@ -34,6 +36,16 @@ public:
     void Respawn() {
 
 
+    }
+
+    void SetStartPos() {
+        startPos.x = x;
+        startPos.y = y;
+    }
+
+    void ResetPos() {
+        x = startPos.x;
+        y = startPos.y;
     }
 
     void Move() 

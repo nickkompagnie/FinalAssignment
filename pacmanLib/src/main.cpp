@@ -49,6 +49,7 @@ int main(int /*argc*/, char ** /*argv*/)
     
     //Parameter for collisions
     bool wallinFront = false;
+    int lives = 3;
 
     std::vector<std::vector<int>> map = {{
         #include "board.def"
@@ -186,23 +187,27 @@ int main(int /*argc*/, char ** /*argv*/)
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) {
             
-            
-
-            
-
             pacman.Move();
             std::array<int,2> coordinates = {pacman.x, pacman.y};
 
-            if(items[coordinates].type == DOT){ //Check if something is at the current position. This is currently for all objects
-
-            
-            
+            if(items[coordinates].type == DOT){ //Check if there is a dot at the current position
             items.erase(coordinates); //Remove dot 
+            score++; //Increase score
 
+            //Ghost collisions - nvm
+            //if((items[coordinates].type == BLINKY) || (items[coordinates].type == INKY) || (items[coordinates].type == PINKY) || (items[coordinates].type == CLYDE))
+            
+            }
+        }
 
-            score++;
+        //Ghost collisions
+        if((ghost1.x == pacman.x) && (ghost1.y == pacman.y))
+        {
+            ghost1.ResetPos();
+            lives --;
+            ui.setLives(lives);
         }
-        }
+
 
         //Move the ghosts
         ghost1.Move();
@@ -210,14 +215,16 @@ int main(int /*argc*/, char ** /*argv*/)
         ghost3.Move();
         ghost4.Move();  
 
-        
-       
+        ghost1.SetStartPos();
+        ghost2.SetStartPos();
+        ghost3.SetStartPos();
+        ghost4.SetStartPos();
 
         // Set the score
         ui.setScore(score); // <-- Pass correct value to the setter
 
         // Set the amount of lives
-        ui.setLives(2); // <-- Pass correct value to the setter
+        ui.setLives(lives); // <-- Pass correct value to the setter
 
         dotsvector.clear();
 
