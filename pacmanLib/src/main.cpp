@@ -192,11 +192,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
             if(items[coordinates].type == DOT){ //Check if there is a dot at the current position
             items.erase(coordinates); //Remove dot 
-            score++; //Increase score
-
-            //Ghost collisions - nvm
-            //if((items[coordinates].type == BLINKY) || (items[coordinates].type == INKY) || (items[coordinates].type == PINKY) || (items[coordinates].type == CLYDE))
-            
+            score++; //Increase score            
             }
         }
 
@@ -211,14 +207,14 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //Move the ghosts
         ghost1.Move();
-        ghost2.Move();
-        ghost3.Move();
-        ghost4.Move();  
+        // ghost2.Move();
+        // ghost3.Move();
+        // ghost4.Move();  
 
         ghost1.SetStartPos();
-        ghost2.SetStartPos();
-        ghost3.SetStartPos();
-        ghost4.SetStartPos();
+        // ghost2.SetStartPos();
+        // ghost3.SetStartPos();
+        // ghost4.SetStartPos();
 
         // Set the score
         ui.setScore(score); // <-- Pass correct value to the setter
@@ -239,7 +235,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
 
-        std::vector<GameObjectStruct> specialty = {testPowerup, testBonusItem, pacman, ghost1, ghost2, ghost3, ghost4};
+        std::vector<GameObjectStruct> specialty = {testPowerup, testBonusItem, pacman, ghost1}; //ghost2, ghost3, ghost4
 
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
 
