@@ -27,48 +27,38 @@ public:
     {
         if(dir == RIGHT) {
             if(x <= 27) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        x++;
-                        moveCounter = 0;
-                }
+                x++;
+                moveCounter = 0;
             }
             else { //Possible teleport to other side
                 if (y == 13) {
                     x = 0;
+                    moveCounter = 0;
                 }
             }
         }
         else if(dir == LEFT){
             if(x >= 0) {
-                moveCounter++;
-                if(moveCounter > slowness) {
-                    x--;
-                    moveCounter = 0;
-                }
+                x--;
+                moveCounter = 0;
             }
             else { //Possible teleport to other side
                 if (y == 13) {
                     x = 27;
+                    moveCounter = 0;
                 }
             }
         }
         else if(dir == DOWN){
             if(y <= 26) {
-                moveCounter++;
-                if(moveCounter > slowness) {
-                    y++;
-                    moveCounter = 0;
-                }
+                y++;
+                moveCounter = 0;
             }
         }
         else if(dir == UP){
             if(y >= 0) {
-                moveCounter++;
-                if(moveCounter > slowness) {
-                    y--;
-                    moveCounter = 0;
-                }
+                y--;
+                moveCounter = 0;
             }
         }
     }

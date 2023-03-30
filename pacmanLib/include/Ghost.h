@@ -48,7 +48,7 @@ public:
 
             if(map[leftOfCharacter.y][leftOfCharacter.x] != 1) { //If no wall to the left
                 if(turnLeftTimer > 60) {
-                    turnLeftTimer = 0;
+                    turnLeftTimer = rand()%10;
                     int randomvalue = rand()%1;
                     if(randomvalue ==0) {
                         // std::cout << "turning left" << std::endl;
@@ -69,49 +69,39 @@ public:
 
             if(dir == RIGHT) {
                 if(x <= 27) {
-                        moveCounter++;
-                        if(moveCounter > slowness) {
-                            x++;
-                            moveCounter = 0;
-                    }
+                    x++;
+                    moveCounter = 0;
                 }
                 else { //Possible teleport to other side
                     if (y == 13) {
                         x = 0;
+                        moveCounter = 0;
                     }
                 }
             }
 
             else if(dir == LEFT){
                 if(x >= 0) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        x--;
-                        moveCounter = 0;
-                    }
+                    x--;
+                    moveCounter = 0;
                 }
                 else { //Possible teleport to other side
                     if (y == 13) {
                         x = 27;
+                        moveCounter = 0;
                     }
                 }
             }
             else if(dir == DOWN){
                 if(y <= 26) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        y++;
-                        moveCounter = 0;
-                    }
+                    y++;
+                    moveCounter = 0;
                 }
             }
             else if(dir == UP){
                 if(y >= 0) {
-                    moveCounter++;
-                    if(moveCounter > slowness) {
-                        y--;
-                        moveCounter = 0;
-                    }
+                    y--;
+                    moveCounter = 0;
                 }
             }
         }
