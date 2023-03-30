@@ -32,7 +32,7 @@
 /// regarding multithreading issues.
 
 
-int score = 0;
+int score = 1;
 int scaredtimer = 0;
 std::map<std::array<int,2>, GameObjectStruct> items;
 
