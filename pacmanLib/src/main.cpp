@@ -48,8 +48,7 @@ Uint32 gameUpdate(Uint32 interval, void * /*param*/)
 int main(int /*argc*/, char ** /*argv*/)
 {
     
-    //Parameter for collisions
-    bool wallinFront = false;
+    //Parameter for lives
     int lives = 3;
 
     std::vector<std::vector<int>> map = {{

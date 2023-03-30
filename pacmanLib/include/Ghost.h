@@ -12,6 +12,7 @@
 #define GHOST
 
 #include <iostream>
+#include <array>
 #include "Character.h"
 
 std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
@@ -27,8 +28,6 @@ public:
     int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
     int direction = 0;
-    int turnLeftTimer = 0;
-
 
     void Move() 
 
@@ -41,29 +40,22 @@ public:
         ObjectPositionStruct inFrontOfCharacter = GetPosInFront();
         ObjectPositionStruct leftOfCharacter= GetPosLeft();
         ObjectPositionStruct rightOfCharacter = GetPosRight();
-        //turnLeftTimer++;
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) { //If no wall in front
 
             if(map[leftOfCharacter.y][leftOfCharacter.x] != 1) { //If no wall to the left
-                    int randomvalue = rand()%3;
-                    if(randomvalue == 0) { //33% chance to turn left
-                        dir = turnLeft(dir, 1);
-                    }
-                    else if(randomvalue == 1) { //33% chance to turn right
-                        dir = turnLeft(dir, 3);
-                    }
+                int randomvalue = rand()%3;
+                if(randomvalue == 0) { //33% chance to turn left
+                    dir = turnLeft(dir, 1);
+                }
             }
 
-            // if(map[rightOfCharacter.y][rightOfCharacter.x] != 1) { //If no wall to the right
-            //         int randomvalue = rand()%3;
-            //         if(randomvalue == 0) { //33% chance to turn right
-            //             dir = turnLeft(dir, 3);
-            //         }
-            //         // else if(randomvalue == 1) { //33% chance to turn around
-            //         //     dir = turnLeft(dir, 2);
-            //         // }
-            // }
+            if(map[rightOfCharacter.y][rightOfCharacter.x] != 1) { //If no wall to the right
+                int randomvalue = rand()%3;
+                if(randomvalue == 0) { //33% chance to turn right
+                    dir = turnLeft(dir, 3);
+                }
+            }
 
 
             if(dir == RIGHT) {

@@ -11,6 +11,7 @@
 
 #include "GameObjectStruct.h"
 #include "ObjectPositionStruct.h"
+#include <vector>
 
 std::vector<std::vector<int>> map = {{
  #include "board.def"
@@ -134,21 +135,21 @@ public:
     return posRight;
     }
 
-    Direction turnLeft(Direction direction, int amount)
+    Direction turnLeft(Direction _direction, int amount)
     {
-        Direction newDir;
+        Direction direction = _direction;
         for (int i = 0; i < amount; i++)
         {
             if (direction == LEFT)
-                newDir = DOWN;
+                direction = DOWN;
             if (direction == UP)
-                newDir = LEFT;
+                direction = LEFT;
             if (direction == RIGHT)
-                newDir = UP;
+                direction = UP;
             if( direction == DOWN)
-                newDir = RIGHT;        
+                direction = RIGHT;        
         }        
-        return newDir;
+        return direction;
     }
 };
 
