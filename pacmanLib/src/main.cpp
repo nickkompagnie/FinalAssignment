@@ -33,6 +33,7 @@
 
 
 int score = 0;
+int scaredtimer = 0;
 std::map<std::array<int,2>, GameObjectStruct> items;
 
 Uint32 gameUpdate(Uint32 interval, void * /*param*/)
@@ -135,11 +136,14 @@ int main(int /*argc*/, char ** /*argv*/)
     ghost4.type = CLYDE;
     ghost4.dir = RIGHT;
 
+    std::array<Ghost,4> ghostArray = {ghost1,ghost2,ghost3,ghost4};
+
     pacman.SetStartPos();
-    ghost1.SetStartPos();
-    ghost2.SetStartPos();
-    ghost3.SetStartPos();
-    ghost4.SetStartPos();
+
+    for(int i = 0; i<4;i++){
+        ghostArray[i].SetStartPos();
+    }
+
 
     std::vector<GameObjectStruct> dotsvector ;
     //x= 27, y = 26
@@ -165,7 +169,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
                 items.insert(std::pair<std::array<int,2>,GameObjectStruct>(coordinates,dot));
 
-                dotsvector.push_back(dot);
+              
 
 
 
@@ -233,11 +237,17 @@ int main(int /*argc*/, char ** /*argv*/)
             score++; //Increase score            
             }
 
-            if(items[coordinates].type == ENERGsIZER){
+            if(items[coordinates].type == ENERGIZER){
                 items.erase(coordinates);
                 std::cout << "ENERGIZER" << std::endl;
+                scaredtimer = 300;
+
+
+
                 // TODO: Start timer
                 // Ghost becomes scared and edible
+
+
                 
 
 
@@ -245,42 +255,59 @@ int main(int /*argc*/, char ** /*argv*/)
             }
         }
 
+        std::array<Type,4> typeArray = {BLINKY,BLINKY,BLINKY,BLINKY};
+
+
+        if(scaredtimer>0) {
+            scaredtimer--;
+            for(int i = 0; i<4;i++){
+                ghostArray[i].type = SCARED;
+            }
+        }
+
+        
+        else{
+            ghostArray[0].type = typeArray[0];
+            ghostArray[1].type = PINKY;
+            ghostArray[2].type = INKY;
+            ghostArray[3].type = CLYDE;
+
+        }
+
         //Ghost collisions
-        if((ghost1.x == pacman.x) && (ghost1.y == pacman.y))
-        {
-            pacman.ResetPos();
-            ghost1.ResetPos();
-            lives --;
-            ui.setLives(lives);
+
+        for(int i = 0; i<4;i++){
+            if((ghostArray[i].x == pacman.x) && (ghostArray[i].y == pacman.y)) {
+
+                if(scaredtimer>0) {
+                    ghostArray[i].ResetPos();
+                    score++;
+                }
+                else{
+                    pacman.ResetPos();
+                    ghostArray[i].ResetPos();
+                    lives --;
+                    ui.setLives(lives);
+                }
+
+
+            }
+
+
+                
         }
-        if((ghost2.x == pacman.x) && (ghost2.y == pacman.y))
-        {
-            pacman.ResetPos();
-            ghost2.ResetPos();
-            lives --;
-            ui.setLives(lives);
-        }
-        if((ghost3.x == pacman.x) && (ghost3.y == pacman.y))
-        {
-            pacman.ResetPos();
-            ghost3.ResetPos();
-            lives --;
-            ui.setLives(lives);
-        }
-        if((ghost4.x == pacman.x) && (ghost4.y == pacman.y))
-        {
-            pacman.ResetPos();
-            ghost4.ResetPos();
-            lives --;
-            ui.setLives(lives);
-        }
+        
 
 
         //Move the ghosts
-        ghost1.Move();
-        ghost2.Move();
-        ghost3.Move();
-        ghost4.Move();  
+        for(int i = 0; i<4;i++){
+
+            ghostArray[i].Move();
+        }
+
+
+                
+        
 
         
 
@@ -303,7 +330,7 @@ int main(int /*argc*/, char ** /*argv*/)
         std::vector<GameObjectStruct> objects;
         // std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
 
-        std::vector<GameObjectStruct> specialty = {testBonusItem, decorativeWall, pacman, ghost1, ghost2, ghost3, ghost4};
+        std::vector<GameObjectStruct> specialty = {testBonusItem, decorativeWall, pacman, ghostArray[0], ghostArray[1], ghostArray[2], ghostArray[3]};
         objects.insert(objects.end(), dotsvector.begin(), dotsvector.end() );
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
         
