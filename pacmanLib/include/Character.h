@@ -26,26 +26,13 @@ private:
     ObjectPositionStruct startPos;
 
 public:
-
-
-    void Move() {
-
-    
-
-
-
-    }
-
-    void Die() {
-
-
-    }
-
+    //Set the current position of the character as start position
     void SetStartPos() {
         startPos.x = x;
         startPos.y = y;
     }
 
+    //Change the position of the character to its start position
     void ResetPos() {
         x = startPos.x;
         y = startPos.y;
@@ -53,7 +40,7 @@ public:
 
     ObjectPositionStruct GetPosInFront()
     {
-    // Calculate the position in front of the character based on their direction
+    // Calculate the position in front of the character based on their direction and position
     ObjectPositionStruct posInFront;
 
     if (dir == LEFT)
@@ -81,7 +68,7 @@ public:
 
     ObjectPositionStruct GetPosLeft()
     {
-    // Calculate the position left of the character based on their direction
+    // Calculate the position left of the character based on their direction and position
     ObjectPositionStruct posLeft;
 
     if (dir == LEFT)
@@ -109,7 +96,7 @@ public:
 
     ObjectPositionStruct GetPosRight()
     {
-    // Calculate the position right of the character based on their direction
+    // Calculate the position right of the character based on their direction and position
     ObjectPositionStruct posRight;
 
     if (dir == LEFT)
@@ -137,6 +124,7 @@ public:
 
     Direction turnLeft(Direction _direction, int amount)
     {
+        //Turn the character 90 degrees to the left, "amount" of times
         Direction direction = _direction;
         for (int i = 0; i < amount; i++)
         {

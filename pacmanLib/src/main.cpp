@@ -6,11 +6,6 @@
 // Description : The main file of the PacMan game
 //==============================================================
 
-#include "Powerup.h"
-#include "BonusItem.h"
-#include "CollectibleDot.h"
-#include "Lives.h"
-#include "Score.h"
 #include "UI.h"
 #include "PacmanChar.h"
 #include "Ghost.h"
@@ -87,7 +82,7 @@ int main(int /*argc*/, char ** /*argv*/)
 
     //Create every ENERGIZER, based on the previously defined coordinates
     for(int i=0; i<4; i++) {
-        Powerup energiser;
+        GameObjectStruct energiser;
         energiser.x =powerUpCoordinates[i][0];
         energiser.y = powerUpCoordinates[i][1];
         energiser.type = ENERGIZER;
@@ -150,7 +145,7 @@ int main(int /*argc*/, char ** /*argv*/)
         for(int j=0;j<27;j++) {
             if(map[j][i]==0) {
 
-                CollectibleDot dot;
+                GameObjectStruct dot;
                 dot.x = i;
                 dot.y = j;
                 dot.type = DOT;
@@ -211,7 +206,7 @@ int main(int /*argc*/, char ** /*argv*/)
             score++; //Increase score by 1 to ensure this only will happen once every 25 points
 
             //Initiate bonus item
-            BonusItem bonus;
+            GameObjectStruct bonus;
             bonus.type = ORANGE;
 
             bool placeFound = false;
@@ -278,9 +273,6 @@ int main(int /*argc*/, char ** /*argv*/)
                 score= score+20;                        //Gain 20 points
 
             }
-              
-
-    
                 
         }
 
@@ -291,12 +283,9 @@ int main(int /*argc*/, char ** /*argv*/)
 
         //If the timer is not running, make sure that the ghosts are not scared. This is mainly when the timer has expired.
         else{
-            
             for(int i=0;i<4;i++){
                 ghostArray[i].type = typeArray[i];
             }
-      
-
         }
 
         
@@ -318,14 +307,8 @@ int main(int /*argc*/, char ** /*argv*/)
                     lives --;                             //Reduce lives by 1
                     ui.setLives(lives);                   
                 }
-
-
             }
-
-
-                
         }
-
     
         //Move the ghosts
         for(int i = 0; i<4;i++){
@@ -348,8 +331,8 @@ int main(int /*argc*/, char ** /*argv*/)
         
 
         // Render the scene
+
         std::vector<GameObjectStruct> objects;
-        // std::cout << "vector objects length at initiation: " << objects.size() << std::endl;
 
         //Collect the specialties
         std::vector<GameObjectStruct> specialty = {decorativeWall, pacman, ghostArray[0], ghostArray[1], ghostArray[2], ghostArray[3]};
@@ -359,6 +342,7 @@ int main(int /*argc*/, char ** /*argv*/)
         objects.insert(objects.end(), specialty.begin(), specialty.end() );
         objects.insert(objects.end(),bonusses.begin(),bonusses.end());
 
+        //Update the screen
         ui.update(objects);
         
 

@@ -32,6 +32,7 @@ public:
     void Move() 
 
     {
+        //Only progress through here once every "slowness" game updates
         if(moveCounter < slowness) {
             moveCounter++;
             return;
@@ -57,7 +58,8 @@ public:
                 }
             }
 
-
+            //Move forward
+            
             if(dir == RIGHT) {
                 if(x <= 26) {
                     x++;

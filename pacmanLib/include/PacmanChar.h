@@ -20,16 +20,15 @@ public:
     int slowness = 5; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
 
-    void Respawn() {
-    }
-
     void Move() 
     {
+        //Only progress through here once every "slowness" game updates
         if(moveCounter < slowness) {
             moveCounter++;
             return;
         }
 
+        //Movement
         if(dir == RIGHT) {
             if(x <= 26) {
                 x++;
