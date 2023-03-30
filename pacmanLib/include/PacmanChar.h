@@ -31,27 +31,23 @@ public:
         }
 
         if(dir == RIGHT) {
-            if(x <= 27) {
+            if(x <= 26) {
                 x++;
                 moveCounter = 0;
             }
             else { //Possible teleport to other side
-                if (y == 13) {
                     x = 0;
                     moveCounter = 0;
-                }
             }
         }
         else if(dir == LEFT){
-            if(x >= 0) {
+            if(x >= 1) {
                 x--;
                 moveCounter = 0;
             }
             else { //Possible teleport to other side
-                if (y == 13) {
                     x = 27;
                     moveCounter = 0;
-                }
             }
         }
         else if(dir == DOWN){

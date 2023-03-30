@@ -5,21 +5,21 @@
 // Authors : Quinten Boeve and Nick Kompagnie
 // Group : 17
 // License : N.A. or open source license like LGPL
-// Description : Ghost class
+// Description : Ghost class, moves around randomly
 //==============================================================
 
 #ifndef GHOST
 #define GHOST
 
 #include <iostream>
+#include <array>
 #include "Character.h"
 
 std::array<Direction,4> directionlist = {RIGHT,LEFT,UP,DOWN};
 
 
 
-
-/// Class of pacman player character
+/// Class of ghost character
 class Ghost : public Character
 {
 private:
@@ -28,14 +28,6 @@ public:
     int slowness = 10; //Opposite of speed (it does the same, but higher is slower)
     int moveCounter = 0;
     int direction = 0;
-    int turnLeftTimer = 0;
-
-
-
-    void Respawn() {
-
-
-    }
 
     void Move() 
 
@@ -47,54 +39,44 @@ public:
 
         ObjectPositionStruct inFrontOfCharacter = GetPosInFront();
         ObjectPositionStruct leftOfCharacter= GetPosLeft();
-        turnLeftTimer++;
+        ObjectPositionStruct rightOfCharacter = GetPosRight();
 
         if(map[inFrontOfCharacter.y][inFrontOfCharacter.x] != 1) { //If no wall in front
 
             if(map[leftOfCharacter.y][leftOfCharacter.x] != 1) { //If no wall to the left
-                if(turnLeftTimer > 60) {
-                    turnLeftTimer = rand()%10;
-                    int randomvalue = rand()%1;
-                    if(randomvalue ==0) {
-                        // std::cout << "turning left" << std::endl;
-                        dir = turnLeft(dir); 
-                    }
-                    else {
-                        std::cout << "not turning left this time" << std::endl;
-                    }
+                int randomvalue = rand()%3;
+                if(randomvalue == 0) { //33% chance to turn left
+                    dir = turnLeft(dir, 1);
                 }
-                
             }
 
-                
-                // Check if wall is in front
-                // Generate random number between 0 and 3
-                // Move to the direction according to the number
-                
+            if(map[rightOfCharacter.y][rightOfCharacter.x] != 1) { //If no wall to the right
+                int randomvalue = rand()%3;
+                if(randomvalue == 0) { //33% chance to turn right
+                    dir = turnLeft(dir, 3);
+                }
+            }
+
 
             if(dir == RIGHT) {
-                if(x <= 27) {
+                if(x <= 26) {
                     x++;
                     moveCounter = 0;
                 }
                 else { //Possible teleport to other side
-                    if (y == 13) {
-                        x = 0;
-                        moveCounter = 0;
-                    }
+                    x = 0;
+                    moveCounter = 0;
                 }
             }
 
             else if(dir == LEFT){
-                if(x >= 0) {
+                if(x >= 1) {
                     x--;
                     moveCounter = 0;
                 }
                 else { //Possible teleport to other side
-                    if (y == 13) {
-                        x = 27;
-                        moveCounter = 0;
-                    }
+                    x = 27;
+                    moveCounter = 0;
                 }
             }
             else if(dir == DOWN){
@@ -113,12 +95,8 @@ public:
         
         //If a wall in front, change direction to random direction
         else {
-
-        int randomvalue = rand()%4;
-
-
-        dir = directionlist[randomvalue];
-
+            int randomvalue = rand()%4;
+            dir = directionlist[randomvalue];
         }
     }
 
