@@ -106,21 +106,50 @@ public:
     return posLeft;
     }
 
-    Direction turnLeft(Direction direction)
+    ObjectPositionStruct GetPosRight()
     {
-        Direction newDir;
+    // Calculate the position right of the character based on their direction
+    ObjectPositionStruct posRight;
 
-        if (direction == LEFT)
-            newDir = DOWN;
-        if (direction == UP)
-            newDir = LEFT;
-        if (direction == RIGHT)
-            newDir = UP;
-        if( direction == DOWN)
-            newDir = RIGHT;
-        return newDir;
+    if (dir == LEFT)
+    {
+        posRight.x = x;
+        posRight.y = y - 1;
+    }
+    else if (dir == RIGHT)
+    {
+        posRight.x = x;
+        posRight.y = y + 1;
+    }
+    else if (dir == UP)
+    {
+        posRight.x = x + 1;
+        posRight.y = y;
+    }
+    else if (dir == DOWN)
+    {
+        posRight.x = x - 1;
+        posRight.y = y;
+    }
+    return posRight;
     }
 
+    Direction turnLeft(Direction direction, int amount)
+    {
+        Direction newDir;
+        for (int i = 0; i < amount; i++)
+        {
+            if (direction == LEFT)
+                newDir = DOWN;
+            if (direction == UP)
+                newDir = LEFT;
+            if (direction == RIGHT)
+                newDir = UP;
+            if( direction == DOWN)
+                newDir = RIGHT;        
+        }        
+        return newDir;
+    }
 };
 
 #endif
